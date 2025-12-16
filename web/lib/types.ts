@@ -4,6 +4,7 @@ export interface Profile {
   username: string | null;
   bio: string | null;
   profile_image_url: string | null;
+  interests: string | null;
   budget_preference: string | null;
   travel_style: string | null;
   travel_pace: string | null;

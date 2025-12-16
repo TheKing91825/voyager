@@ -34,57 +34,61 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-zinc-950 flex flex-col">
       {/* Top Navigation */}
-      <nav className="bg-white border-b border-gray-200">
+      <nav className="border-b border-zinc-800">
         <div className="container mx-auto px-6 py-4">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl">✈️</span>
-            <h1 className="text-2xl font-bold text-blue-600">voyAIger</h1>
+            <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold">V</span>
+            </div>
+            <h1 className="text-xl font-semibold text-white">voyAIger</h1>
           </Link>
         </div>
       </nav>
 
       {/* Login Form */}
       <div className="flex-1 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md border border-gray-200">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">
-            Welcome Back
-          </h2>
-          <p className="text-gray-600 text-center mb-6">
-            Sign in to continue your journey
-          </p>
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-white mb-2">
+              Welcome back
+            </h2>
+            <p className="text-zinc-400">
+              Sign in to continue your journey
+            </p>
+          </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg mb-4 text-sm">
+            <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-lg mb-6 text-sm">
               {error}
             </div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div>
-              <label className="block text-gray-900 font-medium mb-2">
+              <label className="block text-zinc-300 font-medium mb-2 text-sm">
                 Email
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900"
+                className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-zinc-500"
                 placeholder="your@email.com"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-gray-900 font-medium mb-2">
+              <label className="block text-zinc-300 font-medium mb-2 text-sm">
                 Password
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900"
+                className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-zinc-500"
                 placeholder="••••••••"
                 required
               />
@@ -93,23 +97,23 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-gray-700">
+            <p className="text-zinc-400">
               Don't have an account?{' '}
-              <Link href="/signup" className="text-indigo-600 font-semibold hover:text-indigo-700">
+              <Link href="/signup" className="text-blue-400 font-semibold hover:text-blue-300 transition-colors">
                 Sign Up
               </Link>
             </p>
           </div>
 
           <div className="mt-4 text-center">
-            <Link href="/" className="text-gray-600 text-sm hover:text-gray-800">
+            <Link href="/" className="text-zinc-500 text-sm hover:text-zinc-400 transition-colors">
               ← Back to Home
             </Link>
           </div>

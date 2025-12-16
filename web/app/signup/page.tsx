@@ -21,7 +21,6 @@ export default function SignupPage() {
     setSuccess(false);
 
     try {
-      // Sign up with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
@@ -30,7 +29,6 @@ export default function SignupPage() {
       if (authError) throw authError;
 
       if (authData.user && authData.session) {
-        // Create profile using backend API (bypasses RLS)
         const token = authData.session.access_token;
         
         const profileResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/profile/me`, {
@@ -49,10 +47,8 @@ export default function SignupPage() {
           throw new Error(errorData.error || 'Failed to create profile');
         }
 
-        // Show success message
         setSuccess(true);
         
-        // Redirect after 2 seconds
         setTimeout(() => {
           router.push('/preferences');
         }, 2000);
@@ -65,49 +61,53 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-zinc-950 flex flex-col">
       {/* Top Navigation */}
-      <nav className="bg-white border-b border-gray-200">
+      <nav className="border-b border-zinc-800">
         <div className="container mx-auto px-6 py-4">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl">✈️</span>
-            <h1 className="text-2xl font-bold text-blue-600">voyAIger</h1>
+            <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold">V</span>
+            </div>
+            <h1 className="text-xl font-semibold text-white">voyAIger</h1>
           </Link>
         </div>
       </nav>
 
       {/* Signup Form */}
       <div className="flex-1 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md border border-gray-200">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2 text-center">
-            Create Account
-          </h2>
-          <p className="text-gray-600 text-center mb-6">
-            Start your travel planning journey
-          </p>
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-white mb-2">
+              Create your account
+            </h2>
+            <p className="text-zinc-400">
+              Start planning your next adventure
+            </p>
+          </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg mb-4 text-sm">
+            <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded-lg mb-6 text-sm">
               {error}
             </div>
           )}
 
           {success && (
-            <div className="bg-green-50 border border-green-200 text-green-700 p-3 rounded-lg mb-4 text-sm">
-              ✓ Account created successfully! Redirecting to preferences...
+            <div className="bg-green-500/10 border border-green-500/20 text-green-400 p-3 rounded-lg mb-6 text-sm">
+              ✓ Account created! Redirecting to preferences...
             </div>
           )}
 
           <form onSubmit={handleSignup} className="space-y-5">
             <div>
-              <label className="block text-gray-900 font-medium mb-2">
+              <label className="block text-zinc-300 font-medium mb-2 text-sm">
                 Username
               </label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900"
+                className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-zinc-500"
                 placeholder="johndoe"
                 required
                 disabled={loading || success}
@@ -115,14 +115,14 @@ export default function SignupPage() {
             </div>
 
             <div>
-              <label className="block text-gray-900 font-medium mb-2">
+              <label className="block text-zinc-300 font-medium mb-2 text-sm">
                 Email
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900"
+                className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-zinc-500"
                 placeholder="your@email.com"
                 required
                 disabled={loading || success}
@@ -130,42 +130,42 @@ export default function SignupPage() {
             </div>
 
             <div>
-              <label className="block text-gray-900 font-medium mb-2">
+              <label className="block text-zinc-300 font-medium mb-2 text-sm">
                 Password
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900"
+                className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-zinc-500"
                 placeholder="••••••••"
                 required
                 minLength={6}
                 disabled={loading || success}
               />
-              <p className="text-xs text-gray-600 mt-1">At least 6 characters</p>
+              <p className="text-xs text-zinc-500 mt-1.5">At least 6 characters</p>
             </div>
 
             <button
               type="submit"
               disabled={loading || success}
-              className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Creating account...' : success ? 'Account Created!' : 'Sign Up'}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-gray-700">
+            <p className="text-zinc-400">
               Already have an account?{' '}
-              <Link href="/login" className="text-indigo-600 font-semibold hover:text-indigo-700">
+              <Link href="/login" className="text-blue-400 font-semibold hover:text-blue-300 transition-colors">
                 Sign In
               </Link>
             </p>
           </div>
 
           <div className="mt-4 text-center">
-            <Link href="/" className="text-gray-600 text-sm hover:text-gray-800">
+            <Link href="/" className="text-zinc-500 text-sm hover:text-zinc-400 transition-colors">
               ← Back to Home
             </Link>
           </div>

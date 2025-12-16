@@ -18,18 +18,20 @@ export default function Navbar() {
     { href: '/explore', label: 'Explore' },
     { href: '/social', label: 'Social' },
     { href: '/trips', label: 'My Trips' },
-    { href: '/profile', label: 'My Profile' },
-    { href: '/preferences', label: 'Preferences' },
+    { href: '/profile', label: 'Profile' },
+    { href: '/preferences', label: 'Settings' },
   ];
 
   return (
-    <nav className="bg-white border-b border-gray-200">
+    <nav className="border-b border-zinc-800 bg-zinc-950/50 backdrop-blur-xl sticky top-0 z-50">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl">✈️</span>
-            <span className="text-2xl font-bold text-blue-600">voyAIger</span>
+            <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold">V</span>
+            </div>
+            <span className="text-xl font-semibold text-white">voyAIger</span>
           </Link>
 
           {/* Navigation Links */}
@@ -40,8 +42,8 @@ export default function Navbar() {
                 href={item.href}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                   pathname === item.href
-                    ? 'text-indigo-600 bg-indigo-50'
-                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'
+                    ? 'text-white bg-zinc-800'
+                    : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
                 }`}
               >
                 {item.label}
@@ -50,7 +52,7 @@ export default function Navbar() {
             
             <button
               onClick={handleLogout}
-              className="px-4 py-2 rounded-lg font-medium text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors ml-2"
+              className="px-4 py-2 rounded-lg font-medium text-zinc-400 hover:text-red-400 hover:bg-zinc-900 transition-colors ml-2"
             >
               Logout
             </button>

@@ -1,2 +1,31 @@
+# Environment variables
 backend/.env
+.env
+*.env
+.env.local
+.env.production
+!.env.example
+
+# Dependencies
 backend/node_modules/
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+backend/*.log
+
+# Build outputs
+backend/dist/
+backend/build/
+.next/
+out/
+
+# OS
+.DS_Store
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/

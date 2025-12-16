@@ -1,0 +1,58 @@
+-- ============================================
+-- SUPABASE SETUP SQL
+-- Run this in your Supabase SQL Editor
+-- ============================================
+
+-- 1. Enable Row Level Security on profiles table
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+
+-- 2. Create policy to allow users to read their own profile
+CREATE POLICY "Users can view their own profile"
+ON profiles FOR SELECT
+USING (auth.uid() = id);
+
+-- 3. Create policy to allow users to update their own profile
+CREATE POLICY "Users can update their own profile"
+ON profiles FOR UPDATE
+USING (auth.uid() = id);
+
+-- 4. Create policy to allow users to insert their own profile
+CREATE POLICY "Users can insert their own profile"
+ON profiles FOR INSERT
+WITH CHECK (auth.uid() = id);
+
+-- 5. Create function to automatically create profile when user signs up
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.profiles (id, username, created_at)
+  VALUES (
+    NEW.id,
+    COALESCE(NEW.raw_user_meta_data->>'username', SPLIT_PART(NEW.email, '@', 1)),
+    NOW()
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- 6. Create trigger to call the function on new user signup
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW
+  EXECUTE FUNCTION public.handle_new_user();
+
+-- ============================================
+-- VERIFICATION QUERIES
+-- ============================================
+
+-- Check if RLS is enabled
+SELECT tablename, rowsecurity 
+FROM pg_tables 
+WHERE schemaname = 'public' AND tablename = 'profiles';
+
+-- Check policies
+SELECT * FROM pg_policies WHERE tablename = 'profiles';
+
+-- Check if trigger exists
+SELECT tgname FROM pg_trigger WHERE tgname = 'on_auth_user_created';
